@@ -1,0 +1,28 @@
+class Solution {
+public:
+
+    void helper(int ind,int target,int size,vector<int>& v,vector<vector<int>>& ans){
+        
+        if(ind==10){
+            if(target==0 && v.size()==size){
+                ans.push_back(v);
+            }
+            return;
+        }
+
+        //take this num------------
+        if(target>=ind){
+        v.push_back(ind);
+        helper(ind+1,target-ind,size,v,ans);
+        v.pop_back();
+        }
+
+        helper(ind+1,target,size,v,ans);
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+         vector<vector<int>> ans;
+         vector<int> v;
+         helper(1,n,k,v,ans);
+         return ans;
+    }
+};
