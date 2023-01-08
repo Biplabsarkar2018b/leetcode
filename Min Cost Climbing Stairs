@@ -65,3 +65,46 @@ public:
         return min(dp[cost.size()-2],dp[cost.size()-1]);
     }
 };
+
+
+
+
+
+
+
+
+//space optimization-----------------------------------------
+
+
+
+class Solution {
+public:
+    // int helper(vector<int>& cost,int i,vector<int>& dp){
+    //     // if(i==cost.size()) return 0;
+    //     if(i<0) return 0;
+    //     // if(i>=0) return 0;
+    //     if(dp[i]!=-1) return dp[i];
+
+    //     int oneStep = cost[i] + helper(cost,i-1,dp);
+        
+    //     int twoStep = cost[i] + helper(cost,i-2,dp);
+    //     return dp[i] = min(oneStep,twoStep);
+    // }
+    int minCostClimbingStairs(vector<int>& cost) {
+        // vector<int> dp(cost.size()+1);
+        // dp[0] = cost[0];
+        int prev2 = cost[0];
+        // dp[1] = cost[1];
+        int prev1 = cost[1];
+        int res;
+        // return min(helper(cost,cost.size()-1,dp),helper(cost,cost.size()-2,dp));
+        for(int i=2;i<cost.size();i++){
+            // dp[i] = cost[i] + min((dp[i-1]),(dp[i-2]));
+            res = cost[i] + min(prev2,prev1);
+            prev2 = prev1;
+            prev1 = res;
+        }
+        // return min(dp[cost.size()-2],dp[cost.size()-1]);
+        return min(prev1,prev2);
+    }
+};
