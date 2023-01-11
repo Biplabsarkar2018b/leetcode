@@ -1,0 +1,59 @@
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        stack<char> st;
+        string answer = "";
+        string temp = "";
+        for(auto it:s){
+            if(it=='('){
+                if(st.size()>=1){
+                    st.push(it);
+                    temp += it;
+                }else{
+                    st.push(it);
+                }  
+            }else if(it==')'){
+                if(st.size()>1){
+                    st.pop();
+                    temp += it;
+                }else{
+                    st.pop();
+                    answer += temp;
+                    temp = "";
+                }
+            }
+        } 
+        return answer;   
+
+    
+    }
+};
+
+
+
+
+
+
+
+//method 2--------------------------
+
+
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        int count = 0;
+        string str;
+        for (char c : s) {
+            if (c == '(') {
+                if (count++) {
+                    str += '(';
+                }
+            } else {
+                if (--count) {
+                    str += ')';
+                }
+            }
+        }
+        return str;
+    }
+};
