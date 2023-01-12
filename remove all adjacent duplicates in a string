@@ -1,0 +1,34 @@
+class Solution {
+public:
+   string rev(string str){
+       int start = 0;
+       int end = str.size()-1;
+       while(start<end){
+           swap(str[start],str[end]);
+           start++;
+           end--;
+       }
+       return str;
+   }
+    string removeDuplicates(string s) {
+        stack<char> st;
+        for(char i:s){
+            if(!st.empty()){
+                if(i==st.top()){
+                    st.pop();
+                    continue;
+                }
+            }
+            st.push(i);
+        }
+
+        string ans = "";
+        while(!st.empty()){
+            ans+=st.top();
+            st.pop();
+        }
+        // ans.reverse(ans.begin(),ans.end());
+        ans = rev(ans);
+        return ans;
+    }
+};
