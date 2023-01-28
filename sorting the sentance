@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string sortSentence(string s) {
+        vector<pair<string,int>> v;
+
+        string t = "";
+
+        for(auto i:s){
+            if(int(i)>=48 && int(i)<=57){
+                int ind = int(i) - 48;
+                ind--;
+                v.push_back({t,ind});
+                t = "";
+            }else if(isblank(i)){
+                t = "";
+                continue;
+            }else
+                t += i;
+        }
+
+        vector<string> v1(v.size());
+        for(auto i:v){
+            v1[i.second] = i.first;
+        }
+
+        string ans = "";
+
+        for(auto i:v1){
+            ans += i;
+            ans += " ";
+        }
+        ans.pop_back();
+        return ans;
+
+
+    }
+};
