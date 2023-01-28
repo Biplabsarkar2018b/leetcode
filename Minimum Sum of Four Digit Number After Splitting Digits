@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minimumSum(int num) {
+        vector<int> nums;
+        while(num!=0){
+            nums.push_back(num%10);
+            num/=10;
+        }
+        
+        sort(nums.begin(),nums.end());
+
+        int new1 = 0;
+        int new2 = 0;
+
+        // while(nums.size()>0){
+        //     if(nums.size()>0)
+        //         new1 = (10 * new1) + nums[nums.size()-1];
+        //     nums.pop_back();
+        //     if(nums.size()>0)
+        //         new2 = (10 * new2) + nums[nums.size()-1];
+        //     nums.pop_back();
+        // }
+
+        for(int i=0;i<nums.size();i = i+2){
+            if(i<nums.size()){
+                new1 = new1 * 10 + nums[i];
+            }
+            if(i+1<nums.size()){
+                new2 = new2 * 10 + nums[i+1];
+            }
+        }
+
+        return new1+new2;
+    }
+};
