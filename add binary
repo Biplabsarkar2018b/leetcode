@@ -1,0 +1,83 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string ans = "";
+      int f = a.size()-1;
+      int l = b.size()-1;
+      char carry = '0';
+
+      while(f>=0 || l>=0){
+          if(f>=0 && l>=0){
+              if(a[f]=='0' && b[l]=='0'){
+                  if(carry=='0'){
+                      ans += '0';
+                  }else{
+                      ans += '1';
+                      carry = '0';
+                  }
+              }else if(a[f]=='0' && b[l]=='1'){
+                  if(carry=='0'){
+                      ans += '1';
+                  }else{
+                      ans += '0';
+                      carry = '1';
+                  }
+              }else if(a[f]=='1' && b[l]=='0'){
+                  if(carry=='0'){
+                      ans += '1';
+                  }else{
+                      ans += '0';
+                      carry = '1';
+                  }
+              }else if(a[f]=='1' && b[l]=='1'){
+                  if(carry=='0'){
+                      ans += '0';
+                      carry = '1';
+                  }else{
+                      ans += '1';
+                      carry = '1';
+                  }
+              }
+              f--;
+              l--;
+          }else if(f>=0){
+              if(a[f]=='0'){
+                  if(carry=='0'){
+                      ans += '0';
+                  }else{
+                      ans += '1';
+                      carry = '0';
+                  }
+              }else if(a[f]=='1'){
+                  if(carry=='0'){
+                      ans += '1';
+                  }else{
+                      ans += '0';
+                      carry = '1';
+                  }
+              }
+              f--;
+          }else if(l>=0){
+              if(b[l]=='0'){
+                  if(carry=='0'){
+                      ans += '0';
+                  }else{
+                      ans += '1';
+                      carry = '0';
+                  }
+              }else if(b[l]=='1'){
+                  if(carry=='0'){
+                      ans += '1';
+                  }else{
+                      ans += '0';
+                      carry = '1';
+                  }
+              }
+              l--;
+          }
+      }
+      if(carry=='1') ans+='1';
+      reverse(ans.begin(),ans.end());
+      return ans;
+    }
+};
