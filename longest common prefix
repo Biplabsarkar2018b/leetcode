@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string answer = strs[0];
+
+        for(int i=1;i<strs.size();i++){
+            string ans = "";
+            for(int it=0;it<strs[i].size();it++){
+                if(strs[i][it]!=answer[it]) break;
+                ans += answer[it];
+            }
+            answer = ans;
+        }
+        return answer;
+    }
+};
+
+//flower-----
+//ans = ""
+//it ->0  to 3
+//
