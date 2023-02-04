@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string addSpaces(string s, vector<int>& spaces) {
+        string ans = "";
+
+        int it = 0;
+        int spaceIt = 0;
+        while(it<s.size()){
+            if(spaceIt<spaces.size() && it==spaces[spaceIt]){
+                //inserting space
+                ans+=" ";
+                //incrementing the iterator of the spaces array
+                spaceIt++;
+            }else{
+                //adding the char to the answer
+                ans+=s[it];
+                it++;
+            }
+        }
+        return ans;
+    }
+};
