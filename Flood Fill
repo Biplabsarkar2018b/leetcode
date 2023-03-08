@@ -1,0 +1,27 @@
+class Solution {
+public:
+
+    void dfs(vector<vector<int>>& image,int i,int j,vector<vector<int>>& answer,vector<vector<bool>>& visited,int color,int inColor){
+        if(i<0 || j<0 || i>=image.size() || j>=image[0].size() || visited[i][j]==true || image[i][j]!=inColor) return;
+
+        visited[i][j] = true;
+        answer[i][j] = color;
+        dfs(image,i,j-1,answer,visited,color,inColor);
+        dfs(image,i,j+1,answer,visited,color,inColor);
+        dfs(image,i-1,j,answer,visited,color,inColor);
+        dfs(image,i+1,j,answer,visited,color,inColor);
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        vector<vector<int>> answer = image;
+        vector<vector<bool>> visited(image.size());
+        int iniColor = image[sr][sc];
+        for(int i=0;i<image.size();i++){
+            for(int j=0;j<image[i].size();j++){
+                visited[i].push_back(false);
+            }
+        }
+
+        dfs(image,sr,sc,answer,visited,color,iniColor);
+        return answer;
+    }
+};
