@@ -1,0 +1,58 @@
+This unique logic has been identified by my friend Madhurendra
+
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    // bool isMirror(TreeNode* r1,TreeNode* r2){
+    //     if(!r2 && !r2) return true;
+    //     // else if(r1->left==r2->left)
+    //     else if(!r2) return false;
+    //     else if(!r1) return false;
+    //     bool ans = r1->left==r2->right&&r1->right==r2->left;
+    //     return isMirror(r1->left,r2->right)&&isMirror(r1->right,r2->left)&&ans;
+    // }
+    void rootRightLeft(TreeNode* root,vector<int>& v1){
+        if(!root){
+            v1.push_back(-1);
+             return;
+        }
+
+        v1.push_back(root->val);
+        rootRightLeft(root->right,v1);
+        rootRightLeft(root->left,v1);
+    }
+
+    void rootLeftRight(TreeNode* root,vector<int>& v2){
+        if(!root){
+            v2.push_back(-1);
+             return;
+        }
+
+        v2.push_back(root->val);
+        rootLeftRight(root->left,v2);
+        rootLeftRight(root->right,v2);
+    }
+    bool isSymmetric(TreeNode* root) {
+        vector<int> v1,v2;
+        rootRightLeft(root,v1);
+        rootLeftRight(root,v2);
+
+        for(int i=0;i<v1.size();i++){
+            if(v1[i]!=v2[i]) return false;
+        }
+
+        return true;
+    }
+};
