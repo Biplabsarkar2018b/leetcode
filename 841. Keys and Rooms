@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& rooms,vector<bool>& visited,int node){
+        visited[node] = true;
+
+        for(int i:rooms[node]){
+            //if not visited then only go inside
+            if(!visited[i]){
+                dfs(rooms,visited,i);
+            }
+        }
+    }
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        vector<bool> visited(rooms.size(),false);
+
+        for(int i=0;i<1;i++){
+            //if not visited-----
+            if(!visited[i]){
+                dfs(rooms,visited,i);
+            }
+        }
+
+        for(bool j:visited){
+            if(!j) return false;
+        }
+        return true;
+    }
+};
