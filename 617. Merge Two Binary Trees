@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+     void helper(TreeNode* r1,TreeNode* r2,TreeNode* prev,bool isLeft){
+         //if both node is null then return
+         if(!r1 && !r2){
+             return;
+         }
+
+        int tValue = 0;
+        if(r1){
+            tValue+=r1->val;
+        }
+        if(r2){
+            tValue+=r2->val;
+        }
+        TreeNode* t = new TreeNode(tValue);
+        if(isLeft){
+            prev->left = t;
+        }else{
+            prev->right = t;
+        }
+
+        if(r1 && r2){
+            helper(r1->left,r2->left,t,true);
+            helper(r1->right,r2->right,t,false);
+        }else if(!r1){
+            helper(NULL,r2->left,t,true);
+            helper(NULL,r2->right,t,false);
+        }else if(!r2){
+            helper(r1->left,NULL,t,true);
+            helper(r1->right,NULL,t,false);
+        }else{
+            helper(NULL,NULL,t,true);
+            helper(NULL,NULL,t,false);
+        }
+
+     }
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        TreeNode* ans = new TreeNode(0);
+        helper(root1,root2,ans,true);
+        return ans->left;
+    }
+};
