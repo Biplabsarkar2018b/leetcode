@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+
+        //keeping track of no of zeros, because we would not want that in a window
+        // no of zeros to exceed k, we can only flip k zeros
+
+        // maxi is the ans
+
+        //left is the left pointer to the sliding window
+
+        int zeros = 0;
+        int maxi = 0;
+        int left = 0;
+        
+        for(int i=0;i<nums.size();i++){
+            //we can think of i as the right pointer of the window
+            // so if i element is zero then we add it to zeros
+            if(nums[i]==0){
+                zeros++;
+            }
+
+            //checking if the zeros count exceeds k then move left pointer ahead
+            // and move the window ahead and decrement the zeros counter untill
+            // it becomes as we want
+
+            while(zeros>k){
+                if(nums[left]==0) zeros--;
+                left++;
+            }
+            //updating the window size
+            int windowSize = i - left + 1;
+            maxi = max(maxi,windowSize);
+        }
+        return maxi;
+    }
+};
