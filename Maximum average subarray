@@ -1,0 +1,27 @@
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        //answer is for keeping the maxium answer
+        double answer = 0;
+        //t for a temporary sum
+        double t = 0;
+
+        //creating the first sliding window of size k
+        for(int i=0;i<k;i++){
+            t+=nums[i];
+        }
+        answer = t / k;
+
+        //checking all the sliding windows of size k
+        for(int i=k;i<nums.size();i++){
+            //adding the new element from the right of the window
+            t+=nums[i];
+            // removing the leftmost previous element that is not in the current 
+            // window but in the t sum
+            t-=nums[i - k];
+            // updating the answer
+            answer = max(answer,t/k);
+        }
+        return answer;
+    }
+};
