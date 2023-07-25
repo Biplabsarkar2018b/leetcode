@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int i = 0;
+        int writeIndex = 0; // Index to write the compressed characters
+
+        while (i < chars.size()) {
+            char t = chars[i];
+            int c = 0;
+
+            while (i < chars.size() && chars[i] == t) {
+                c++;
+                i++;
+            }
+
+            chars[writeIndex++] = t;
+
+            if (c > 1) {
+                string digit = "";
+                while (c != 0) {
+                    int d = c % 10;
+                    digit += static_cast<char>('0' + d);
+                    c /= 10;
+                }
+
+                // Write the digit count in reverse order
+                for (int f = digit.size() - 1; f >= 0; f--) {
+                    chars[writeIndex++] = digit[f];
+                }
+            }
+        }
+
+        return writeIndex;
+    }
+};
