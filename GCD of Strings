@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+
+
+        //learnings--------->
+        // 1. if both strings are equal return any one as answer
+        // 2. we have to always assume that one particular string's length is smaller
+        // than the others, or we will force them to, like swapping them,
+        // 3. if str1 starts with str2 then we subtract str2 from str1 and check the 
+        // same methods again and again until we find answer 
+
+        
+        if(str1.length()<str2.length()){
+            return gcdOfStrings(str2,str1);
+        }
+
+        if(str1==str2) return str1;
+
+        if(str1.substr(0, str2.length()) == str2){
+            return gcdOfStrings(str1.substr(str2.length(),str1.length()),str2);
+        }
+        return "";
+    }
+};
