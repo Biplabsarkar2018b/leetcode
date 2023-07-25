@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+
+        //the technique i used in solving the max con ones III
+
+        //zeros are to keep a count how many zeros we have in the window
+
+        //left is the leftmost element of the window
+
+        // maxi is answer
+
+
+
+
+        int zeros = 0;
+        int left = 0;
+        int maxi = 0;
+
+        for(int right =0;right<nums.size();right++){
+            //if the right pointer of the window has a zero element we 
+            // increment the zeros count
+            if(nums[right]==0){
+                zeros++;
+            }
+
+            // we dont want the zeros count to exceed 1
+
+            //so we check if its larger than 1 then loop untill it becomes less
+            // than zero
+
+            while(zeros>1){
+                if(nums[left]==0) zeros--;
+                left++;
+            }
+
+            //updating the answer
+
+            int windowSize = right - left;
+            maxi = max(maxi,windowSize);
+        }
+
+        return maxi;
+        
+    }
+};
