@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+
+        //maxi is for keeping track of the maximum area
+        int maxi = 0;
+        // two pointers approach
+        int l = 0;
+        int r = height.size() - 1;
+        int area;
+        while(l<r){
+            //area is height * width
+            // we are considering min of l and r heights because 
+            // that's what contribute to the area
+            // width is difference between r and l
+            area = (min(height[l],height[r])* (r-l));
+            //we update maxi with maximum between both of them
+            maxi = max(maxi,area);
+            //then we check for more l and r
+            if(height[l]<height[r]) l++;
+            else r--;
+        }
+        return maxi;
+    }
+};
