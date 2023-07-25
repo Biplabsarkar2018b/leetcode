@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
+        int maxi = INT_MIN;
+
+        //we are first finding the maximum no of candies one kid has currently
+        //storing it in maxi var
+
+        for(int i:candies){
+            if(maxi<i) maxi = i;
+        }
+
+        //declaring the result array
+
+        vector<bool> ans(candies.size(),false);
+
+        //checking that whether after giving a kid all the extra candies, is he now
+        // holding the most candies or not
+
+        for(int i=0;i<ans.size();i++){
+            if(candies[i]+extraCandies>=maxi) ans[i] = true;
+        }
+        return ans;
+    }
+};
