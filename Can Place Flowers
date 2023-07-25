@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        //we can only place flowers when both prev and next pointers are empty means 0
+        int prev,next;
+        for(int i=0;i<flowerbed.size();i++){
+            if(n<=0) break;
+            if(flowerbed[i]==0){
+                //prev and next should be checked like the following otherwise it will 
+                //throw overflow errors
+                prev = (i==0) ? 0 : flowerbed[i-1];
+                next = (i==flowerbed.size()-1) ? 0 : flowerbed[i+1];
+
+                //after placing a flower we decrease the flower no by 1
+
+                if(prev==0 && next==0){
+                    flowerbed[i] = 1;
+                    n--;
+                }
+            }
+        }
+        //if all the flowers are been placed we can return true or false
+        return n==0;
+    }
+};
