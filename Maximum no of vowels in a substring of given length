@@ -1,0 +1,37 @@
+class Solution {
+public:
+    
+    int maxVowels(string s, int k) {
+        int answer = 0;
+        
+        //creating the first window
+        for (int i = 0; i < k; i++) {
+            if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u') {
+                answer++;
+            }
+        }
+        
+        int maxVowelCount = answer;
+        
+        for (int i = k; i < s.size(); i++) {
+            //if the leftmost element which will be ommited now is a vowel then sorry
+            //we have to decrease the answer because it is no longer will be with us
+            if (s[i - k] == 'a' || s[i - k] == 'e' || s[i - k] == 'i' || s[i - k] == 'o' || s[i - k] == 'u') {
+                answer--;
+            }
+
+            //but the new element which is the current right most element, is its a
+            //vowel then we will increase the answer;
+            
+            if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u') {
+                answer++;
+            }
+
+            //finally we are updating the result in each iteration
+            
+            maxVowelCount = max(maxVowelCount, answer);
+        }
+        
+        return maxVowelCount;
+    }
+};
