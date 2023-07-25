@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+
+        //taking two vectors where we will store our prefix and suffix products
+        
+        vector<int> prefix(nums.size()),suffix(nums.size());
+        int pr = 1;
+        for(int i = 0;i<nums.size();i++){
+            pr*=nums[i];
+            prefix[i] = pr; 
+        }
+
+        int sx = 1;
+        for(int i = nums.size()-1;i>=0;i--){
+            sx*=nums[i];
+            suffix[i] = sx; 
+        }
+
+
+        vector<int> ans(nums.size());
+
+        for(int i=0;i<nums.size();i++){
+            int p = (i==0) ? 1 : prefix[i-1];
+            int s = (i==nums.size()-1) ? 1 : suffix[i+1];
+
+            ans[i] = p*s;
+        }
+        return ans;
+
+
+    }
+};
