@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        unordered_map<int, int> freqMap;
+
+        int ans = 0;
+        for (int i : nums) {
+            int need = k - i;
+            //if in the there exist the need element and it's freq is more than 0
+            // then only we perform operation
+            // otherwise we just add a new element in the map
+            if (freqMap.find(need) != freqMap.end() && freqMap[need] > 0) {
+                ans++;
+                freqMap[need]--;
+            } else {
+                freqMap[i]++;
+            }
+        }
+        return ans;
+    }
+};
