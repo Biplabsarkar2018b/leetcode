@@ -1,0 +1,27 @@
+class RecentCounter {
+public:
+    deque<int> reqs;
+    //deque because we need push and pop from both the ends
+    
+    RecentCounter() {
+        
+    }
+    
+    int ping(int t) {
+        // adding the request
+        reqs.push_back(t);
+
+        // Remove requests outside the 3000 milliseconds time window
+        while (reqs.front() < t - 3000) {
+            reqs.pop_front();
+        }
+
+        return reqs.size();
+    }
+};
+
+/**
+ * Your RecentCounter object will be instantiated and called as such:
+ * RecentCounter* obj = new RecentCounter();
+ * int param_1 = obj->ping(t);
+ */
