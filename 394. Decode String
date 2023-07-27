@@ -1,0 +1,51 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<char> st;
+
+        for(int i=0;i<s.size();i++){
+            if(s[i]==']'){
+                //pop untill we find a '['
+                //store the popped items in a string
+                string temp = "";
+                while(st.top()!='['){
+                    temp+=st.top();
+                    st.pop();
+                }
+                //popping the '['
+                st.pop();
+                //taking the multiplier
+                 int multiplier = 0;
+                int base = 1;
+                while (!st.empty() && isdigit(st.top())) {
+                    //because multiplier can be more than single digit
+                    multiplier = multiplier + (st.top() - '0') * base;
+                    st.pop();
+                    base *= 10;
+                }
+
+                
+                // Pushing the decoded string back into the stack
+                //in reversed order
+                while (multiplier--) {
+                    for (int j = temp.size() - 1; j >= 0; j--) {
+                        st.push(temp[j]);
+                    }
+                }
+
+            }else{
+                //if it's not ']'
+                st.push(s[i]);
+            }
+        }
+
+        //now in the stack the decoded string is present
+        string ans = "";
+        while(!st.empty()){
+            ans+=st.top();
+            st.pop();
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
