@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void helper(TreeNode* root, int target, int& count, long long currentSum, std::unordered_map<long long, long long> runningSums) {
+        if (!root) return;
+
+        currentSum += root->val;
+
+        // Check if the current sum equals the target sum.
+        // If yes, increment the count of valid paths.
+        if (currentSum == target) {
+            count++;
+        }
+
+        // Check if the difference between the current sum and target sum exists in the runningSums map.
+        // If yes, increment the count by the number of occurrences of that difference in the map.
+        if (runningSums.find(currentSum - target) != runningSums.end()) {
+            count += runningSums[currentSum - target];
+        }
+
+        // Increment the count of the current sum in the runningSums map.
+        runningSums[currentSum]++;
+
+        // Recursively call for left and right subtrees.
+        helper(root->left, target, count, currentSum, runningSums);
+        helper(root->right, target, count, currentSum, runningSums);
+
+        // Backtrack and remove the current running sum after exploring subtrees.
+        // runningSums[currentSum]--;
+    }
+
+    int pathSum(TreeNode* root, int targetSum) {
+        unordered_map<long long, long long> m;
+        int count = 0;
+        helper(root, targetSum, count, 0, m);
+        return count;
+    }
+};
