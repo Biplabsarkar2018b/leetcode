@@ -1,0 +1,43 @@
+//BRUTE - FORCE
+
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        unordered_map<char,int> m;
+
+        for(char i:word1){
+            m[i]++;
+        }
+        unordered_map<int,int> freq;
+
+        for(auto i:m){
+            freq[i.second]++;
+        }
+
+        unordered_map<char,int> m2;
+
+        for(char i:word2){
+            m2[i]++;
+        }
+        unordered_map<int,int> freq2;
+
+        for(auto i:m2){
+            freq2[i.second]++;
+        }
+
+        for(auto i:m){
+            if(m2.find(i.first)==m2.end()) return false;
+        }
+
+        for(auto i:freq){
+            if(freq2.find(i.first)==freq2.end()){
+                return false;
+            }else{
+                if(freq2[i.first]!=i.second) return false;
+            }
+        }
+        return true;
+
+
+    }
+};
