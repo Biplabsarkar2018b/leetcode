@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    // Returns a pair of (leftZigzag, rightZigzag) values starting from the current node.
+    pair<int, int> helper(TreeNode* root, int& maxZigzag) {
+        if (!root) {
+            return { 0, 0 };
+        }
+
+        auto leftZigzag = helper(root->left, maxZigzag);
+        auto rightZigzag = helper(root->right, maxZigzag);
+
+        // If we can move left from the current node, increment leftZigzag by 1, otherwise reset it to 0.
+        int left = root->left ? leftZigzag.second + 1 : 0;
+        // If we can move right from the current node, increment rightZigzag by 1, otherwise reset it to 0.
+        int right = root->right ? rightZigzag.first + 1 : 0;
+
+        // Update the maximum zigzag path length.
+        maxZigzag = max(maxZigzag, max(left, right));
+
+        return { left, right };
+    }
+   int longestZigZag(TreeNode* root) {
+        int maxZigzag = 0;
+        helper(root, maxZigzag);
+        return maxZigzag;
+    }
+};
