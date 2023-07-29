@@ -1,0 +1,27 @@
+ Node* helper(Node* old, unordered_map<Node*,Node*>& m){
+        // if we have already this node in the map then just return itself
+        if(m.find(old)!=m.end()) return m[old];
+        //otherwise make a clone and map it with the real node
+        Node* clone = new Node(old->val);
+        m[old] = clone;
+
+        //checking all the neighbors of our real node
+        for(Node* n:old->neighbors){
+                //we also have to add the neighbors to our cloned
+                // so we recursively get the neighbors with the following
+                // line
+               clone->neighbors.push_back(helper(n,m));
+            
+        }
+        //finally returning the cloned graph
+        return clone;
+    }
+    Node* cloneGraph(Node* node) {
+        //there may be a case where the node is null, in that point we jsut return nullptr
+        if(!node) return NULL;
+        
+        
+        unordered_map<Node*,Node*> m;
+
+        return helper(node,m);
+    }
