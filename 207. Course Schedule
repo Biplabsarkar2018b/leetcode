@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool dfs(vector<vector<int>>& graph, vector<int>& visited, int node) {
+        if (visited[node] == 1) return true; // Cycle detected, return false
+        if (visited[node] == 2) return false; // Already visited, no cycle
+
+        visited[node] = 1; // Mark as currently visiting
+
+        for (int v : graph[node]) {
+            if (dfs(graph, visited, v)) return true; // If cycle found in the subtree, return false
+        }
+
+        visited[node] = 2; // Mark as visited (no cycle)
+        return false;
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph(numCourses);
+        
+        for (vector<int> e : prerequisites) {
+            graph[e[1]].push_back(e[0]);
+        }
+
+        vector<int> visited(numCourses, 0); // 0: Not visited, 1: Visiting, 2: Visited
+
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] == 0 && dfs(graph, visited, i)) {
+                return false; // Cycle detected, cannot finish all courses
+            }
+        }
+
+        return true; // No cycle found, can finish all courses
+    }
+};
