@@ -1,0 +1,53 @@
+class Solution {
+public:
+    bool dfs(vector<vector<int>>& graph,stack<int>& st,vector<int>& visited,int node){
+        if(visited[node]==1) return true;//return true if it's been found
+        //while currently visiting, means has cycle
+        if(visited[node]==2) return false;//already visited
+
+        visited[node] = 1;//currently visiting 
+
+        for(int v:graph[node]){
+            //if the subgraph has cycle then return true
+            if(dfs(graph,st,visited,v)) return true;
+            
+        }
+
+        //completed visited the current node
+        visited[node] = 2;
+        //pushing to stack
+        st.push(node);
+        return false;//as there are no loop
+
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph(numCourses);
+
+        for(vector<int> e:prerequisites){
+            graph[e[1]].push_back(e[0]);
+        }
+
+        stack<int> st;
+        vector<int> result;
+
+        vector<int> visited(numCourses,0);
+
+        for(int i=0;i<numCourses;i++){
+            if(!visited[i]){
+                //if cycle has been found, i.e. we can't finish all the 
+                //courses, so returning empty result;
+               if(dfs(graph,st,visited,i)) return result;
+            }
+        }
+
+        //putting all the elements from stack to result array 
+        //it will be our topological order
+        while(!st.empty()){
+            result.push_back(st.top());
+            st.pop();
+        }
+        return result;
+
+
+    }
+};
