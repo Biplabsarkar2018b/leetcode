@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int helper(vector<vector<int>>& grid,int m,int n,map<pair<int,int>,int>& memo){
+        pair<int,int> key = {m,n};
+        if(memo.find(key)!=memo.end()) return memo[key];
+        if(m==0 && n==0) return grid[0][0];
+        // if(m==0 || n==0) return 0;
+        if(m<0 || n<0) return INT_MAX;
+
+        int right = helper(grid,m,n-1,memo);
+        int down = helper(grid,m-1,n,memo);
+
+        memo[key] = min(right,down) + grid[m][n];
+        return memo[key];
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+       map<pair<int,int>,int> memo;
+        return helper(grid,grid.size()-1,grid[0].size()-1,memo);
+    }
+};
