@@ -1,0 +1,28 @@
+ //i am using map here because cpp don't allow pair as key in u_m
+        //so the intuition is that we will consider only the base cases
+        //suppose we have the grid as 1,1
+        // we are already on the destination point
+        //so we only can reach there in one way
+
+        //another base case is that 
+        //if any of the m or n is 0
+        //i.e. the grid is invalid, in that case we can't reach the dest
+        //so the ans is 0
+
+        //i am using DP here because there are overlapping subproblems
+        //which causes a time complexity of O(n^(m+n))~O(n^2)
+        //and a recursion stack space complexity of O(m+n)
+        //cause we are traveling each items
+        
+
+        // to overcome this issue we are storing the results of each
+        //recursion call in a map.
+        //remember that (m,n)==(n,m)
+        //these are same, both will give the same ans
+        //that's why we are storing both the things in the map
+
+
+        //after storing the results
+        //Time Complexity : O(m+n);
+        //because we are traversing one item at most once
+        //Space Complexity : O(m+n) + O(m+n);
