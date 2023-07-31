@@ -1,0 +1,57 @@
+class Solution {
+public:
+//     Ok so let's understand the problem first.
+// we have to generate valid parenthesis string, with the no of pairs given.
+// That means if the input is given as 3, we have 3 open and 3 close first brackets or parenthee whatever you say.
+
+// This is a very simple problem, let's discuss first how and what makes a valid parenthesis, what are the rules:
+
+// 1. Each opening parenthesis must have a closing one
+// 2. There should not be any closing parenthesis before opening parenthee
+// 3. no of opening == no of closing
+
+
+// so we can do this like following : 
+// what if we keep track of how many opening and closing parenthee we have used.
+// we will declare two var for it. And we will say that if no of closing is strictly less than opening then only we are allowed to put a closing, otherwise we shall put only openings.
+// One more condition should be followed for each, i.e. no of opening and no of closing should'nt be greater than the input pair.
+// If it is greater then we may have a valid string of parenthesis, that's our base case;
+
+
+    void dp(int n,int open,int close,vector<string>& ans,string curr){
+
+        if(open==n && close==n){
+            ans.push_back(curr);
+            return;
+        }
+
+        if(close<open){
+            //we are allowed to put a )
+            if(open<n){
+                //putting a (
+                curr+='(';
+                dp(n,open+1,close,ans,curr);
+                curr.pop_back();
+            }
+            if(close<n){
+                //putting a )
+                curr+=')';
+                dp(n,open,close+1,ans,curr);
+            }
+            
+        }else{
+            //only put a (
+            if(open<n){
+                //putting a (
+                curr+='(';
+                dp(n,open+1,close,ans,curr);
+            }
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        
+        vector<string> ans;
+        dp(n,0,0,ans,"");
+        return ans;
+    }
+};
