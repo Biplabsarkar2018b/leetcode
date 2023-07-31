@@ -1,0 +1,75 @@
+class Solution {
+public:
+// OK. Before moving onto the solution, I would highly encourage you to please think and write/draw your intuition on paper or notebook.
+
+// So, let's first understand what the question says.
+// we will be given two strings s and p. s is the string we need to generate from p, which is a pattern, generate in the sense if we can!
+// Now, the p string which is the pattern string has some special characters in it, only two of them -> ('.' and '')
+// These can be multiple times in the pattern but the '' character will only appear once after a valid english alphabet where the '.' charater may appear anywhere.
+
+// Now, what do they do ? Why do they appear ? How to decode it ? wait.... wait......
+
+// '.' - > It can be transformed to any character, any single english alphabet.
+// '*' -> It can be used to generate any number of characters of it's predecessor.
+
+// I think you got the '.' right, but still a bit confused about the '*', let's understand it better with an example:
+
+// 'a*' - > '' -> we can use the '' to make empty charcater(i.e. we are not using it)
+// 'a' - > 'a' -> we can use the '' to make 1 character of its predecessor(a here)
+// 'a' - > 'aa'-> we can use the '' to make 2 character of its predecessor(a here)
+// 'a' - > 'aaa'-> we can use the '' to make 3 character of its predecessor(a here)
+// 'a' - > 'aaaa'-> we can use the '*' to make 4 character of its predecessor(a here)
+// .
+// .
+// .
+// and so on......
+
+// what if there is somthing like this -> '.'
+// that means we can generate as many '.' as we want and use those dots to convert to any character, simply, if we have '.' this thing in our pattern then we can say that our pattern will match anything
+
+// ok, i think you understood the problem now, if not then please read it again.
+
+// so let's start solving it.
+
+// Approach
+// we will keep two pointers, one for the s and another for the p.
+// so that we can keep a track which elements are matching and which not.
+// Suppose i is for s, and j is for p;
+
+// So whenever we find s[i]==p[j], i.e. we found a match, or if we find p[j]=='.', that also is a match.
+// so if any of those conditions match then we will check whether there is a '*' or not just after the current element.
+
+// if there is a '', we will have two choices, either we use that '' or we can simply neglect it,
+// if we use the * then we have to generate a character of its pre. and it has to match the current p[i] and after generating we will call the next recursion with incrementing i, just because i is matched and cancelled so that we can proceed or go ahead;
+// but if we don't use the * then we need to go 2 steps ahead of current j, (j=j+2), because we are neglecting the j's current character and * both.
+
+// and if there is no '*' we and p[j]==s[i], we can simply call next recursion with i and j incremented by one position.
+    bool dp(string s,string p, int i, int j,map<pair<int,int>,bool>& m){
+        pair<int,int> key = {i,j};
+        if(m.find(key)!=m.end()) return m[key];
+        if(i>=s.size() && j>=p.size()) return true;
+        if(j>=p.size()) return false;
+
+
+
+        bool match = i<s.size() and (s[i]==p[j] || p[j]=='.');
+        if((j+1)<p.size() && p[j+1]=='*'){
+            //we have two choices
+            //either take * or discard it
+            //first one is taking the star
+            //second one is discarding the star
+            m[key] = dp(s,p,i,j+2,m) || (match && dp(s,p,i+1,j,m));
+            return m[key];
+        }
+        if(match){
+            m[key] = dp(s,p,i+1,j+1,m);
+            return m[key];
+        }
+        m[key] = false;
+        return m[key];
+    }
+    bool isMatch(string s, string p) {
+        map<pair<int,int>,bool> m; 
+        return dp(s,p,0,0,m);
+    }
+};
