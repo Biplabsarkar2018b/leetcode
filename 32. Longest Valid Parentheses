@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        //we only store the index of openings
+        stack<int> st;
+        int ans = 0;
+        //we will keep track of index which was invalid
+        int lastInvalid = -1;
+
+        for (int i = 0; i < s.size(); i++) {
+            //if you find opening then push in stack
+            if (s[i] == '(') {
+                st.push(i);
+            } else {
+                //if you find closing there can be two cases--->
+
+                //either the stack is empty or not empty
+
+
+
+                //if the stack is empty, i.e. a opening parenthesis
+                //without a closing parenthesis
+                //i.e. it's invalid
+                if (st.empty()) {
+                    lastInvalid = i;
+                } else {
+                    //if the stack is not empty
+                    
+                    st.pop();
+                    //after popping the opening there can be again two
+                    //cases - > either the stack becomes empty or not empty
+                    if (st.empty()) {
+                        //if empty, i.e. there was no opening parenthesis
+                        //between the lastInvalid index and current index
+                        //so our current length is below--->
+                        ans = max(ans, i - lastInvalid);
+                    } else {
+                         //if not empty, i.e. there was opening 
+                         //parenthesis
+                        //between the lastInvalid index and current index
+                        //so our current length is below--->
+                        ans = max(ans, i - st.top());
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
