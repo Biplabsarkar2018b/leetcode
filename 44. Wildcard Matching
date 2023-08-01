@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> memo;
+
+//follow the regular expression matching problem to understand the intuition
+
+    bool dp(string& s, string& p, int i, int j) {
+        if (i >= s.size() && j >= p.size()) return true;
+        if (j >= p.size()) return false;
+        if (i >= s.size()) return (p[j] == '*' && dp(s, p, i, j + 1));
+
+        if (memo[i][j] != -1) return memo[i][j];
+
+        bool match = s[i] == p[j] || p[j] == '?';
+        if (p[j] == '*') {
+            memo[i][j] = dp(s, p, i + 1, j) || dp(s, p, i, j + 1);
+        } else if (match) {
+            memo[i][j] = dp(s, p, i + 1, j + 1);
+        } else {
+            memo[i][j] = false;
+        }
+
+        return memo[i][j];
+    }
+
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        memo.resize(m + 1, vector<int>(n + 1, -1));
+        return dp(s, p, 0, 0);
+    }
+};
