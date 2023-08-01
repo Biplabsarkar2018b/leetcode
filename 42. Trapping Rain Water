@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+
+        // the formula for water = min(leftMax,rightMax) - height[curr]
+        int s = height.size();
+        //we will store an element's right max in maxRight array and
+        //viceversa
+        //we will store the rain that can be trapped in rain array for 
+        //each element of height
+        vector<int> maxLeft(s),maxRight(s),rain(s);
+        int maxi = 0;
+        //storing max left values
+        for(int i=0;i<s;i++){
+            maxLeft[i] = maxi;
+            maxi = max(maxi,height[i]);
+        }
+
+        maxi = 0;
+        //storing max right values
+        for(int i = s-1;i>=0;i--){
+            maxRight[i] = maxi;
+            maxi = max(maxi,height[i]);
+        }
+        //storing rain values
+        for(int i=0;i<s;i++){
+            int water = min(maxRight[i],maxLeft[i]) - height[i];
+            //water can be negative, if so we will make it zero
+            if(water<0) water = 0;
+            rain[i] = water;
+        }
+        int ans = 0;
+        //summing the total rain 
+        for(int i:rain){
+            ans+=i;
+        }
+        return ans;
+    }
+};
