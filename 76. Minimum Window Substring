@@ -1,0 +1,52 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        //we will store the freq of our characters in a map
+        unordered_map<char, int> target;
+        //initializing the map with its freq equal to t
+        for (char c : t) {
+            target[c]++;
+        }
+
+        //we are going to use two pointers technique
+        int left = 0, right = 0, count = t.size();
+        //the following will define our ans string
+        int minLen = INT_MAX, minStart = 0;
+
+        while (right < s.size()) {
+            //if the current element has more than 0 freq in map, i.e. 
+            // it matched with t
+            // so we decrease count by 1 
+            if (target[s[right]] > 0) {
+                count--;
+            }
+            //we also decrease the freq
+            target[s[right]]--;
+            //and then move ahead our right pointer
+            right++;
+
+            //when all the characters are found i.e count is zero
+            //we will do the following actions
+            while (count == 0) {
+                //we only update our final length if we found a lesser 
+                // length
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    //minstart is the pointer from where our ans string
+                    //index start
+                    minStart = left;
+                }
+                //we got to find some more lenghts, so we are increasing
+                //the freqs again and counts too
+                target[s[left]]++;
+                if (target[s[left]] > 0) {
+                    count++;
+                }
+                //as the left is seen and checked so we move it ahead
+                left++;
+            }
+        }
+
+        return minLen == INT_MAX ? "" : s.substr(minStart, minLen);
+    }
+};
